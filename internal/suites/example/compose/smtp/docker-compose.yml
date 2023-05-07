@@ -2,7 +2,7 @@
 version: '3'
 services:
   smtp:
-    image: schickling/mailcatcher
+    image: 'schickling/mailcatcher'
     ports:
       - '1025:1025'
     labels:
@@ -14,5 +14,5 @@ services:
       - 'traefik.http.routers.mail.tls=true'
       - 'traefik.http.services.mail.loadbalancer.server.port=1080'
     networks:
-      - authelianet
+      - 'authelianet'
 ...

@@ -2,7 +2,7 @@
 version: '3'
 services:
   nginx-backend:
-    image: nginx:alpine
+    image: 'nginx:alpine'
     labels:
       # Traefik 1.x
       - 'traefik.frontend.rule=Host:home.example.com,public.example.com,secure.example.com,admin.example.com,singlefactor.example.com'  # yamllint disable-line rule:line-length
@@ -20,5 +20,5 @@ services:
       - ./example/compose/nginx/backend/html:/usr/share/nginx/html
       - ./example/compose/nginx/backend/nginx.conf:/etc/nginx/nginx.conf
     networks:
-      - authelianet
+      - 'authelianet'
 ...

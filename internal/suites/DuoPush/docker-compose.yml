@@ -7,5 +7,5 @@ services:
       - './DuoPush/users.yml:/config/users.yml'
       - './common/pki:/pki:ro'
       - '/tmp:/tmp'
-    user: ${USER_ID}:${GROUP_ID}
+    user: '${USER_ID}:${GROUP_ID}'
 ...

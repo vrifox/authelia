@@ -3,18 +3,18 @@ version: '3'
 services:
   authelia-backend:
     build:
-      context: example/compose/authelia
-      dockerfile: Dockerfile.backend
+      context: 'example/compose/authelia'
+      dockerfile: 'Dockerfile.backend'
       args:
-        USER_ID: ${USER_ID}
-        GROUP_ID: ${GROUP_ID}
+        USER_ID: '${USER_ID}'
+        GROUP_ID: '${GROUP_ID}'
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    command: /resources/entrypoint-backend.sh
-    working_dir: /app
+    command: '/resources/entrypoint-backend.sh'
+    working_dir: '/app'
     cap_add:
-      - SYS_PTRACE
+      - 'SYS_PTRACE'
     volumes:
       - './example/compose/authelia/resources/:/resources'
       - '../..:/app'
@@ -30,7 +30,7 @@ services:
       - 'traefik.http.routers.authelia_backend.tls=true'
       - 'traefik.http.services.authelia_backend.loadbalancer.server.scheme=https'
     environment:
-      - ENVIRONMENT=dev
+      ENVIRONMENT: 'dev'
     networks:
       authelianet:
         ipv4_address: 192.168.240.50

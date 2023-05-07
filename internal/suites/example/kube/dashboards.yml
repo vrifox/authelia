@@ -1,194 +1,194 @@
 # Kubernetes Dashboard
 ---
-apiVersion: v1
-kind: Namespace
+apiVersion: 'v1'
+kind: 'Namespace'
 metadata:
-  name: kubernetes-dashboard
+  name: 'kubernetes-dashboard'
 ...
 ---
-apiVersion: v1
-kind: ServiceAccount
+apiVersion: 'v1'
+kind: 'ServiceAccount'
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard
-  namespace: kubernetes-dashboard
+    k8s-app: 'kubernetes-dashboard'
+  name: 'kubernetes-dashboard'
+  namespace: 'kubernetes-dashboard'
 ...
 ---
-kind: Service
-apiVersion: v1
+kind: 'Service'
+apiVersion: 'v1'
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard
-  namespace: kubernetes-dashboard
+    k8s-app: 'kubernetes-dashboard'
+  name: 'kubernetes-dashboard'
+  namespace: 'kubernetes-dashboard'
 spec:
   ports:
     - port: 443
       targetPort: 8443
   selector:
-    k8s-app: kubernetes-dashboard
+    k8s-app: 'kubernetes-dashboard'
 ...
 ---
-apiVersion: v1
-kind: Secret
+apiVersion: 'v1'
+kind: 'Secret'
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard-certs
-  namespace: kubernetes-dashboard
-type: Opaque
+    k8s-app: 'kubernetes-dashboard'
+  name: 'kubernetes-dashboard-certs'
+  namespace: 'kubernetes-dashboard'
+type: 'Opaque'
 ...
 ---
-apiVersion: v1
-kind: Secret
+apiVersion: 'v1'
+kind: 'Secret'
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard-csrf
-  namespace: kubernetes-dashboard
-type: Opaque
+    k8s-app: 'kubernetes-dashboard'
+  name: 'kubernetes-dashboard-csrf'
+  namespace: 'kubernetes-dashboard'
+type: 'Opaque'
 data:
-  csrf: ""
+  csrf: ''
 ...
 ---
-apiVersion: v1
-kind: Secret
+apiVersion: 'v1'
+kind: 'Secret'
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard-key-holder
-  namespace: kubernetes-dashboard
-type: Opaque
+    k8s-app: 'kubernetes-dashboard'
+  name: 'kubernetes-dashboard-key-holder'
+  namespace: 'kubernetes-dashboard'
+type: 'Opaque'
 ...
 ---
-kind: ConfigMap
-apiVersion: v1
+kind: 'ConfigMap'
+apiVersion: 'v1'
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard-settings
-  namespace: kubernetes-dashboard
+    k8s-app: 'kubernetes-dashboard'
+  name: 'kubernetes-dashboard-settings'
+  namespace: 'kubernetes-dashboard'
 ...
 ---
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
+kind: 'Role'
+apiVersion: 'rbac.authorization.k8s.io/v1'
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard
-  namespace: kubernetes-dashboard
+    k8s-app: 'kubernetes-dashboard'
+  name: 'kubernetes-dashboard'
+  namespace: 'kubernetes-dashboard'
 rules:
   # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
   - apiGroups: [""]
-    resources: ["secrets"]
-    resourceNames: ["kubernetes-dashboard-key-holder", "kubernetes-dashboard-certs", "kubernetes-dashboard-csrf"]
-    verbs: ["get", "update", "delete"]
+    resources: ['secrets']
+    resourceNames: ['kubernetes-dashboard-key-holder', 'kubernetes-dashboard-certs', 'kubernetes-dashboard-csrf']
+    verbs: ['get', 'update', 'delete']
     # Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.
   - apiGroups: [""]
-    resources: ["configmaps"]
-    resourceNames: ["kubernetes-dashboard-settings"]
-    verbs: ["get", "update"]
+    resources: ['configmaps']
+    resourceNames: ['kubernetes-dashboard-settings']
+    verbs: ['get', 'update']
     # Allow Dashboard to get metrics.
   - apiGroups: [""]
-    resources: ["services"]
-    resourceNames: ["heapster", "dashboard-metrics-scraper"]
-    verbs: ["proxy"]
+    resources: ['services']
+    resourceNames: ['heapster', 'dashboard-metrics-scraper']
+    verbs: ['proxy']
   - apiGroups: [""]
-    resources: ["services/proxy"]
-    resourceNames: ["heapster", "http:heapster:", "https:heapster:", "dashboard-metrics-scraper", "http:dashboard-metrics-scraper"]  # yamllint disable-line rule:line-length
-    verbs: ["get"]
+    resources: ['services/proxy']
+    resourceNames: ['heapster', 'http:heapster:', 'https:heapster:', 'dashboard-metrics-scraper', 'http:dashboard-metrics-scraper']  # yamllint disable-line rule:line-length
+    verbs: ['get']
 ...
 ---
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
+kind: 'ClusterRole'
+apiVersion: 'rbac.authorization.k8s.io/v1'
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard
+    k8s-app: 'kubernetes-dashboard'
+  name: 'kubernetes-dashboard'
 rules:
   # Allow Metrics Scraper to get metrics from the Metrics server
-  - apiGroups: ["metrics.k8s.io"]
-    resources: ["pods", "nodes"]
-    verbs: ["get", "list", "watch"]
+  - apiGroups: ['metrics.k8s.io']
+    resources: ['pods', 'nodes']
+    verbs: ['get', 'list', 'watch']
 ...
 ---
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+apiVersion: 'rbac.authorization.k8s.io/v1'
+kind: 'RoleBinding'
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard
-  namespace: kubernetes-dashboard
+    k8s-app: 'kubernetes-dashboard'
+  name: 'kubernetes-dashboard'
+  namespace: 'kubernetes-dashboard'
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: kubernetes-dashboard
+  apiGroup: 'rbac.authorization.k8s.io'
+  kind: 'Role'
+  name: 'kubernetes-dashboard'
 subjects:
-  - kind: ServiceAccount
-    name: kubernetes-dashboard
-    namespace: kubernetes-dashboard
+  - kind: 'ServiceAccount'
+    name: 'kubernetes-dashboard'
+    namespace: 'kubernetes-dashboard'
 ...
 ---
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+apiVersion: 'rbac.authorization.k8s.io/v1'
+kind: 'ClusterRoleBinding'
 metadata:
-  name: kubernetes-dashboard
+  name: 'kubernetes-dashboard'
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: kubernetes-dashboard
+  apiGroup: 'rbac.authorization.k8s.io'
+  kind: 'ClusterRole'
+  name: 'kubernetes-dashboard'
 subjects:
-  - kind: ServiceAccount
-    name: kubernetes-dashboard
-    namespace: kubernetes-dashboard
+  - kind: 'ServiceAccount'
+    name: 'kubernetes-dashboard'
+    namespace: 'kubernetes-dashboard'
 ...
 ---
-kind: Deployment
-apiVersion: apps/v1
+kind: 'Deployment'
+apiVersion: 'apps/v1'
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard
-  namespace: kubernetes-dashboard
+    k8s-app: 'kubernetes-dashboard'
+  name: 'kubernetes-dashboard'
+  namespace: 'kubernetes-dashboard'
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      k8s-app: kubernetes-dashboard
+      k8s-app: 'kubernetes-dashboard'
   template:
     metadata:
       labels:
-        k8s-app: kubernetes-dashboard
+        k8s-app: 'kubernetes-dashboard'
     spec:
       securityContext:
         seccompProfile:
-          type: RuntimeDefault
+          type: 'RuntimeDefault'
       containers:
-        - name: kubernetes-dashboard
-          image: kubernetesui/dashboard:v2.7.0
-          imagePullPolicy: Always
+        - name: 'kubernetes-dashboard'
+          image: 'kubernetesui/dashboard:v2.7.0'
+          imagePullPolicy: 'Always'
           ports:
             - containerPort: 8443
-              protocol: TCP
+              protocol: 'TCP'
           args:
-            - --auto-generate-certificates
-            - --namespace=kubernetes-dashboard
+            - '--auto-generate-certificates'
+            - '--namespace=kubernetes-dashboard'
             # Uncomment the following line to manually specify Kubernetes API server Host
             # If not specified, Dashboard will attempt to auto discover the API server and connect
             # to it. Uncomment only if the default does not work.
             # - --apiserver-host=http://my-address:port
           volumeMounts:
-            - name: kubernetes-dashboard-certs
-              mountPath: /certs
+            - name: 'kubernetes-dashboard-certs'
+              mountPath: '/certs'
               # Create on-disk volume to store exec logs
-            - mountPath: /tmp
-              name: tmp-volume
+            - mountPath: '/tmp'
+              name: 'tmp-volume'
           livenessProbe:
             httpGet:
-              scheme: HTTPS
-              path: /
+              scheme: 'HTTPS'
+              path: '/'
               port: 8443
             initialDelaySeconds: 30
             timeoutSeconds: 30
@@ -198,149 +198,149 @@ spec:
             runAsUser: 1001
             runAsGroup: 2001
       volumes:
-        - name: kubernetes-dashboard-certs
+        - name: 'kubernetes-dashboard-certs'
           secret:
-            secretName: kubernetes-dashboard-certs
-        - name: tmp-volume
+            secretName: 'kubernetes-dashboard-certs'
+        - name: 'tmp-volume'
           emptyDir: {}
-      serviceAccountName: kubernetes-dashboard
+      serviceAccountName: 'kubernetes-dashboard'
       nodeSelector:
-        "kubernetes.io/os": linux
+        "kubernetes.io/os": 'linux'
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
-        - key: node-role.kubernetes.io/master
-          effect: NoSchedule
+        - key: 'node-role.kubernetes.io/master'
+          effect: 'NoSchedule'
 ...
 ---
-kind: Service
-apiVersion: v1
+kind: 'Service'
+apiVersion: 'v1'
 metadata:
   labels:
-    k8s-app: dashboard-metrics-scraper
-  name: dashboard-metrics-scraper
-  namespace: kubernetes-dashboard
+    k8s-app: 'dashboard-metrics-scraper'
+  name: 'dashboard-metrics-scraper'
+  namespace: 'kubernetes-dashboard'
 spec:
   ports:
     - port: 8000
       targetPort: 8000
   selector:
-    k8s-app: dashboard-metrics-scraper
+    k8s-app: 'dashboard-metrics-scraper'
 ...
 ---
-kind: Deployment
-apiVersion: apps/v1
+kind: 'Deployment'
+apiVersion: 'apps/v1'
 metadata:
   labels:
-    k8s-app: dashboard-metrics-scraper
-  name: dashboard-metrics-scraper
-  namespace: kubernetes-dashboard
+    k8s-app: 'dashboard-metrics-scraper'
+  name: 'dashboard-metrics-scraper'
+  namespace: 'kubernetes-dashboard'
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      k8s-app: dashboard-metrics-scraper
+      k8s-app: 'dashboard-metrics-scraper'
   template:
     metadata:
       labels:
-        k8s-app: dashboard-metrics-scraper
+        k8s-app: 'dashboard-metrics-scraper'
     spec:
       securityContext:
         seccompProfile:
-          type: RuntimeDefault
+          type: 'RuntimeDefault'
       containers:
-        - name: dashboard-metrics-scraper
-          image: kubernetesui/metrics-scraper:v1.0.9
+        - name: 'dashboard-metrics-scraper'
+          image: 'kubernetesui/metrics-scraper:v1.0.9'
           ports:
             - containerPort: 8000
-              protocol: TCP
+              protocol: 'TCP'
           livenessProbe:
             httpGet:
-              scheme: HTTP
-              path: /
+              scheme: 'HTTP'
+              path: '/'
               port: 8000
             initialDelaySeconds: 30
             timeoutSeconds: 30
           volumeMounts:
-            - mountPath: /tmp
-              name: tmp-volume
+            - mountPath: '/tmp'
+              name: 'tmp-volume'
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             runAsUser: 1001
             runAsGroup: 2001
-      serviceAccountName: kubernetes-dashboard
+      serviceAccountName: 'kubernetes-dashboard'
       nodeSelector:
-        "kubernetes.io/os": linux
+        "kubernetes.io/os": 'linux'
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
-        - key: node-role.kubernetes.io/master
-          effect: NoSchedule
+        - key: 'node-role.kubernetes.io/master'
+          effect: 'NoSchedule'
       volumes:
-        - name: tmp-volume
+        - name: 'tmp-volume'
           emptyDir: {}
 ...
 ---
-apiVersion: v1
-kind: ServiceAccount
+apiVersion: 'v1'
+kind: 'ServiceAccount'
 metadata:
-  name: admin-user
-  namespace: kubernetes-dashboard
+  name: 'admin-user'
+  namespace: 'kubernetes-dashboard'
 ...
 ---
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+apiVersion: 'rbac.authorization.k8s.io/v1'
+kind: 'ClusterRoleBinding'
 metadata:
-  name: admin-user
+  name: 'admin-user'
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
+  apiGroup: 'rbac.authorization.k8s.io'
+  kind: 'ClusterRole'
+  name: 'cluster-admin'
 subjects:
-  - kind: ServiceAccount
-    name: admin-user
-    namespace: kubernetes-dashboard
+  - kind: 'ServiceAccount'
+    name: 'admin-user'
+    namespace: 'kubernetes-dashboard'
 ...
 ---
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRouteTCP
+apiVersion: 'traefik.containo.us/v1alpha1'
+kind: 'IngressRouteTCP'
 metadata:
-  name: kubernetes-dashboard-ingress
-  namespace: kubernetes-dashboard
+  name: 'kubernetes-dashboard-ingress'
+  namespace: 'kubernetes-dashboard'
 spec:
   entryPoints:
-    - websecure
+    - 'websecure'
   routes:
-    - match: HostSNI(`kubernetes.example.com`)
+    - match: 'HostSNI(`kubernetes.example.com`)'
       services:
-        - name: kubernetes-dashboard
+        - name: 'kubernetes-dashboard'
           port: 443
   tls:
     passthrough: true
 ...
 # Traefik Dashboard
 ---
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+apiVersion: 'traefik.containo.us/v1alpha1'
+kind: 'IngressRoute'
 metadata:
-  name: traefik-dashboard-ingress
-  namespace: authelia
+  name: 'traefik-dashboard-ingress'
+  namespace: 'authelia'
 spec:
   entryPoints:
-    - websecure
+    - 'websecure'
   routes:
-    - match: Host(`traefik.example.com`)
-      kind: Rule
+    - match: 'Host(`traefik.example.com`)'
+      kind: 'Rule'
       services:
-        - name: api@internal
-          kind: TraefikService
+        - name: 'api@internal'
+          kind: 'TraefikService'
 ...
 ---
-apiVersion: traefik.containo.us/v1alpha1
-kind: ServersTransport
+apiVersion: 'traefik.containo.us/v1alpha1'
+kind: 'ServersTransport'
 metadata:
-  name: skipverify
-  namespace: authelia
+  name: 'skipverify'
+  namespace: 'authelia'
 spec:
   insecureSkipVerify: true
 ...

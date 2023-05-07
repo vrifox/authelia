@@ -1,19 +1,19 @@
 ---
 runner:
   golangci:
-    cmd: golangci-lint run
+    cmd: 'golangci-lint run'
     errorformat:
       - '%E%f:%l:%c: %m'
       - '%E%f:%l: %m'
       - '%C%.%#'
-    level: error
+    level: 'error'
   eslint:
-    cmd: cd web && eslint -f rdjson '*/**/*.{js,ts,tsx}'
-    format: rdjson
-    level: error
+    cmd: 'cd web && eslint -f rdjson "*/**/*.{js,ts,tsx}"'
+    format: 'rdjson'
+    level: 'error'
   yamllint:
-    cmd: yamllint --format parsable .
+    cmd: 'yamllint --format parsable .'
     errorformat:
       - '%f:%l:%c: %m'
-    level: warning
+    level: 'warning'
 ...

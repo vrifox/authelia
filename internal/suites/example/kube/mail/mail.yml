@@ -1,64 +1,64 @@
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: 'apps/v1'
+kind: 'Deployment'
 metadata:
-  name: mailcatcher
-  namespace: authelia
+  name: 'mailcatcher'
+  namespace: 'authelia'
   labels:
-    app: mailcatcher
+    app: 'mailcatcher'
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mailcatcher
+      app: 'mailcatcher'
   template:
     metadata:
       labels:
-        app: mailcatcher
+        app: 'mailcatcher'
     spec:
       containers:
-        - name: mailcatcher
-          image: schickling/mailcatcher
+        - name: 'mailcatcher'
+          image: 'schickling/mailcatcher'
           ports:
             - containerPort: 1025
             - containerPort: 1080
 ...
 ---
-apiVersion: v1
-kind: Service
+apiVersion: 'v1'
+kind: 'Service'
 metadata:
-  name: mailcatcher-service
-  namespace: authelia
+  name: 'mailcatcher-service'
+  namespace: 'authelia'
 spec:
   selector:
-    app: mailcatcher
+    app: 'mailcatcher'
   ports:
-    - protocol: TCP
+    - protocol: 'TCP'
       port: 1080
-      name: ui
-    - protocol: TCP
+      name: 'ui'
+    - protocol: 'TCP'
       port: 1025
-      name: smtp
+      name: 'smtp'
 ...
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: 'networking.k8s.io/v1'
+kind: 'Ingress'
 metadata:
-  name: mailcatcher-ingress
-  namespace: authelia
+  name: 'mailcatcher-ingress'
+  namespace: 'authelia'
   annotations:
-    kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    kubernetes.io/ingress.class: 'traefik'
+    traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
 spec:
   rules:
-    - host: mail.example.com
+    - host: 'mail.example.com'
       http:
         paths:
-          - path: /
-            pathType: Prefix
+          - path: '/'
+            pathType: 'Prefix'
             backend:
               service:
-                name: mailcatcher-service
+                name: 'mailcatcher-service'
                 port:
                   number: 1080
 ...

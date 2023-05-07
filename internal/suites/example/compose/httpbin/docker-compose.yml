@@ -2,9 +2,9 @@
 version: '3'
 services:
   httpbin:
-    image: citizenstig/httpbin
+    image: 'citizenstig/httpbin'
     networks:
-      - authelianet
+      - 'authelianet'
     labels:
       # Traefik 1.x
       - 'traefik.frontend.rule=Host:public.example.com;Path:/headers'

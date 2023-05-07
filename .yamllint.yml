@@ -1,7 +1,7 @@
 ---
-extends: default
+extends: 'default'
 
-locale: en_US.UTF-8
+locale: 'en_US.UTF-8'
 
 yaml-files:
   - '*.yaml'
@@ -19,13 +19,13 @@ ignore: |
   .github/ISSUE_TEMPLATE/bug-report.yml
 rules:
   document-end:
-    level: warning
+    level: 'warning'
   empty-values:
-    level: warning
+    level: 'warning'
   indentation:
     spaces: 2
     check-multi-line-strings: true
   line-length:
     max: 120
-  octal-values: enable
+  octal-values: 'enable'
 ...

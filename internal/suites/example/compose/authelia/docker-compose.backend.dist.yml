@@ -2,7 +2,7 @@
 version: '3'
 services:
   authelia-backend:
-    image: authelia:dist
+    image: 'authelia:dist'
     labels:
       # Traefik 1.x
       - 'traefik.frontend.rule=Host:login.example.com'
@@ -18,8 +18,8 @@ services:
     volumes:
       - '../..:/authelia'
     environment:
-      - ENVIRONMENT=dev
-    restart: always
+      ENVIRONMENT: 'dev'
+    restart: 'always'
     networks:
       authelianet:
         ipv4_address: 192.168.240.50
