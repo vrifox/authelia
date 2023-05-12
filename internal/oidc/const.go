@@ -141,6 +141,7 @@ const (
 	FormParameterResponseMode        = "response_mode"
 	FormParameterCodeChallenge       = "code_challenge"
 	FormParameterCodeChallengeMethod = "code_challenge_method"
+	FormParameterCodeCodeVerifier    = "code_verifier"
 	FormParameterClientAssertionType = "client_assertion_type"
 	FormParameterClientAssertion     = "client_assertion"
 )
