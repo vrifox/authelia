@@ -87,7 +87,7 @@ const (
 
 // Response Type strings.
 const (
-	ResponseTypeAuthorizationCodeFlow = "code"
+	ResponseTypeAuthorizationCodeFlow = code
 	ResponseTypeImplicitFlowIDToken   = "id_token"
 	ResponseTypeImplicitFlowToken     = "token"
 	ResponseTypeImplicitFlowBoth      = "id_token token"
@@ -135,6 +135,7 @@ const (
 )
 
 const (
+	FormParameterCode                = code
 	FormParameterClientID            = "client_id"
 	FormParameterClientSecret        = "client_secret"
 	FormParameterRequestURI          = "request_uri"
@@ -298,4 +299,5 @@ const (
 	explicit      = "explicit"
 	preconfigured = "pre-configured"
 	none          = "none"
+	code          = "code"
 )

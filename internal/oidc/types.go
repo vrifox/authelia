@@ -956,3 +956,12 @@ type OpenIDConnectContext interface {
 
 	IssuerURL() (issuerURL *url.URL, err error)
 }
+
+// Serves as validation that the structures in this file implement the relevant fosite interfaces.
+var (
+	_ fosite.Client              = (*BaseClient)(nil)
+	_ fosite.Client              = (*FullClient)(nil)
+	_ fosite.ResponseModeClient  = (*BaseClient)(nil)
+	_ fosite.ResponseModeClient  = (*FullClient)(nil)
+	_ fosite.OpenIDConnectClient = (*FullClient)(nil)
+)

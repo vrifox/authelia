@@ -371,3 +371,8 @@ func clientCredentialsFromRequestBody(form url.Values, forceID bool) (clientID, 
 
 	return clientID, clientSecret, nil
 }
+
+// Serves as validation that the structures in this file implement the fosite interfaces.
+var (
+	_ fosite.Hasher = (*Hasher)(nil)
+)
